@@ -7,6 +7,8 @@ import com.example.todo.schedule.repository.ScheduleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -14,6 +16,8 @@ import java.util.Optional;
 public class ScheduleService {
 
     private final ScheduleRepository scheduleRepository;
+
+
 
     public void create(CreateRequest dto) {
 
@@ -29,5 +33,18 @@ public class ScheduleService {
                 .orElseThrow(() -> new RuntimeException("할일을 찾을 수 없습니다."));
 
         return new FindResponse(schedule.getId(), schedule.getTitle(),schedule.getContent() );
+    }
+
+
+    public List<FindResponse> findAll() {
+        List<FindResponse> findResponses = new ArrayList<>();
+        List<Schedule> schedules = scheduleRepository.findAll();
+        for (Schedule schedule : schedules) {
+            FindResponse findResponse = new FindResponse(
+                    schedule.getId(),schedule.getTitle(),schedule.getContent());
+            findResponses.add(findResponse);
+
+        }
+        return findResponses;
     }
 }

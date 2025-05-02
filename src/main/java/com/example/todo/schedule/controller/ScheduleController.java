@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/schedules")
 @RequiredArgsConstructor
@@ -28,6 +30,13 @@ public class ScheduleController {
 
         scheduleService.findById(scheduleId);
         return ResponseEntity.ok(scheduleService.findById(scheduleId));
+    }
+    //일정 전체 조회
+    @GetMapping
+    ResponseEntity<List<FindResponse>> findAll(){
+
+        scheduleService.findAll();
+        return ResponseEntity.ok(scheduleService.findAll());
     }
 
 }
