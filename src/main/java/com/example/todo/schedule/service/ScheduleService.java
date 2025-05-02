@@ -25,5 +25,9 @@ public class ScheduleService {
 
     public FindResponse findById(Long scheduleId) {
 
+        Schedule schedule = scheduleRepository.findById(scheduleId)
+                .orElseThrow(() -> new RuntimeException("할일을 찾을 수 없습니다."));
+
+        return new FindResponse(schedule.getId(), schedule.getTitle(),schedule.getContent() );
     }
 }
