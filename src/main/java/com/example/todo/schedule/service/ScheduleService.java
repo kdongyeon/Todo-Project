@@ -58,4 +58,10 @@ public class ScheduleService {
         schedule.update(dto.getTitle(), dto.getContent());
 
     }
+
+    public void delete(Long scheduleId) {
+        Schedule schedule = scheduleRepository.findById(scheduleId)
+                .orElseThrow(() -> new RuntimeException("할일을 찾을 수 없습니다."));
+        scheduleRepository.delete(schedule);
+    }
 }

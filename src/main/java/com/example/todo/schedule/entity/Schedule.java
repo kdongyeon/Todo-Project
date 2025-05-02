@@ -40,6 +40,7 @@ public class Schedule extends BaseEntity {
     }
 
 
+    // 스케쥴 수정
     public void update(String title, String content) {
         this.title = title;
         this.content = content;
