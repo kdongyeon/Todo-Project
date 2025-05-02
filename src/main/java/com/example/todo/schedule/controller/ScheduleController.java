@@ -1,6 +1,7 @@
 package com.example.todo.schedule.controller;
 
 import com.example.todo.schedule.dto.request.CreateRequest;
+import com.example.todo.schedule.dto.request.UpdateRequest;
 import com.example.todo.schedule.dto.response.FindResponse;
 import com.example.todo.schedule.service.ScheduleService;
 import lombok.RequiredArgsConstructor;
@@ -37,6 +38,14 @@ public class ScheduleController {
 
         scheduleService.findAll();
         return ResponseEntity.ok(scheduleService.findAll());
+    }
+    @PatchMapping("/{scheduleId}")
+    ResponseEntity<String> update(
+            @PathVariable Long scheduleId,
+            @RequestBody UpdateRequest dto)
+    {
+        scheduleService.update(scheduleId, dto);
+        return ResponseEntity.ok("일정 수정 완료");
     }
 
 }

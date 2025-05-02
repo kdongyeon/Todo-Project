@@ -1,11 +1,13 @@
 package com.example.todo.schedule.service;
 
 import com.example.todo.schedule.dto.request.CreateRequest;
+import com.example.todo.schedule.dto.request.UpdateRequest;
 import com.example.todo.schedule.dto.response.FindResponse;
 import com.example.todo.schedule.entity.Schedule;
 import com.example.todo.schedule.repository.ScheduleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,5 +48,14 @@ public class ScheduleService {
 
         }
         return findResponses;
+    }
+
+    @Transactional
+    public void update(Long scheduleId, UpdateRequest dto) {
+        Schedule schedule = scheduleRepository.findById(scheduleId)
+                .orElseThrow(() -> new RuntimeException("할일을 찾을 수 없습니다."));
+
+        schedule.update(dto.getTitle(), dto.getContent());
+
     }
 }
