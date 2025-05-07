@@ -1,15 +1,25 @@
 package com.example.todo.schedule.dto.response;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
-@RequiredArgsConstructor
+import java.time.LocalDateTime;
+
+
+@AllArgsConstructor
 @Getter
 public class FindResponse {
 
-    private final Long id;
+    private Long id;
 
-    private final String title;
+    private String title;
 
-    private final String content;
+    private String content;
+
+    private LocalDateTime createdAt;
+
+    private LocalDateTime updatedAt;
+
+    private int commentCount;
+
 }

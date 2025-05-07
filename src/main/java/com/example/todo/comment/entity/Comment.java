@@ -22,6 +22,9 @@ public class Comment extends BaseEntity {
     @Column(nullable = false)
     private String content;
 
+    @Column(nullable = false)
+    private Long writerId;
+
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "schedule_id", nullable = false)
@@ -30,6 +33,13 @@ public class Comment extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_id")
     private Comment parentComment;
+
+    public Comment(String content, Long writerId, Schedule schedule, Comment parentComment) {
+        this.content = content;
+        this.writerId = writerId;
+        this.schedule = schedule;
+        this.parentComment = parentComment;
+    }
 
 
 

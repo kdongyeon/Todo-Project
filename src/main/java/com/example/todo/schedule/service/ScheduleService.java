@@ -1,5 +1,6 @@
 package com.example.todo.schedule.service;
 
+import com.example.todo.comment.repository.CommentRepository;
 import com.example.todo.schedule.dto.request.CreateRequest;
 import com.example.todo.schedule.dto.request.UpdateRequest;
 import com.example.todo.schedule.dto.response.FindResponse;
@@ -11,14 +12,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+
 
 @RequiredArgsConstructor
 @Service
 public class ScheduleService {
 
     private final ScheduleRepository scheduleRepository;
-
+    private final CommentRepository commentRepository;
 
 
     public void create(CreateRequest dto) {
@@ -33,8 +34,14 @@ public class ScheduleService {
 
         Schedule schedule = scheduleRepository.findById(scheduleId)
                 .orElseThrow(() -> new RuntimeException("할일을 찾을 수 없습니다."));
+        int commentCount = commentRepository.countByScheduleId(schedule.getId());
 
-        return new FindResponse(schedule.getId(), schedule.getTitle(),schedule.getContent() );
+        return new FindResponse(schedule.getId(),
+                                schedule.getTitle(),
+                                schedule.getContent(),
+                                schedule.getCreatedAt(),
+                                schedule.getUpdatedAt(),
+                                commentCount );
     }
 
 
@@ -42,8 +49,13 @@ public class ScheduleService {
         List<FindResponse> findResponses = new ArrayList<>();
         List<Schedule> schedules = scheduleRepository.findAll();
         for (Schedule schedule : schedules) {
-            FindResponse findResponse = new FindResponse(
-                    schedule.getId(),schedule.getTitle(),schedule.getContent());
+            int commentCount = commentRepository.countByScheduleId(schedule.getId());
+            FindResponse findResponse = new FindResponse(schedule.getId(),
+                                                         schedule.getTitle(),
+                                                         schedule.getContent(),
+                                                         schedule.getCreatedAt(),
+                                                         schedule.getUpdatedAt(),
+                                                         commentCount);
             findResponses.add(findResponse);
 
         }
@@ -59,6 +71,7 @@ public class ScheduleService {
 
     }
 
+    @Transactional
     public void delete(Long scheduleId) {
         Schedule schedule = scheduleRepository.findById(scheduleId)
                 .orElseThrow(() -> new RuntimeException("할일을 찾을 수 없습니다."));

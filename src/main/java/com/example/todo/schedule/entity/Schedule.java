@@ -33,6 +33,7 @@ public class Schedule extends BaseEntity {
     @OneToMany(mappedBy = "schedule", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> commentList = new ArrayList<>();
 
+    private boolean deleted = false;
     // 스케쥴 생성
     public Schedule(String title, String content) {
         this.title = title;
@@ -45,4 +46,7 @@ public class Schedule extends BaseEntity {
         this.title = title;
         this.content = content;
     }
+
+
+
 }

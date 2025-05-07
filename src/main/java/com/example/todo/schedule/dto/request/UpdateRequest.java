@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UpdateRequest {
 
-    private String title;
+    private final String title;
 
-    private String content;
+    private final String content;
 }
