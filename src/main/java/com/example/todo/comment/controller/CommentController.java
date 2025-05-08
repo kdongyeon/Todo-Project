@@ -43,4 +43,9 @@ public class CommentController {
     ){
         return ResponseEntity.ok(commentService.findReply(scheduleId, commentId));
     }
+    // 대글 전체 조회
+    @GetMapping()
+    public ResponseEntity<List<CommentResponse>> findAll(@PathVariable Long scheduleId){
+        return ResponseEntity.ok(commentService.findAll(scheduleId));
+    }
 }

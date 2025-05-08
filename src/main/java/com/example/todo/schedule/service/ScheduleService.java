@@ -1,5 +1,6 @@
 package com.example.todo.schedule.service;
 
+import com.example.todo.comment.dto.response.CommentResponse;
 import com.example.todo.comment.repository.CommentRepository;
 import com.example.todo.schedule.dto.request.CreateRequest;
 import com.example.todo.schedule.dto.request.UpdateRequest;
@@ -34,14 +35,14 @@ public class ScheduleService {
 
         Schedule schedule = scheduleRepository.findById(scheduleId)
                 .orElseThrow(() -> new RuntimeException("할일을 찾을 수 없습니다."));
-        int commentCount = commentRepository.countByScheduleId(schedule.getId());
 
         return new FindResponse(schedule.getId(),
                                 schedule.getTitle(),
                                 schedule.getContent(),
                                 schedule.getCreatedAt(),
-                                schedule.getUpdatedAt(),
-                                commentCount );
+                                schedule.getUpdatedAt()
+
+        );
     }
 
 
@@ -55,8 +56,13 @@ public class ScheduleService {
                                                          schedule.getContent(),
                                                          schedule.getCreatedAt(),
                                                          schedule.getUpdatedAt(),
-                                                         commentCount);
+                                                         commentCount
+
+            );
             findResponses.add(findResponse);
+
+
+
 
         }
         return findResponses;

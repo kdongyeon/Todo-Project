@@ -1,5 +1,6 @@
 package com.example.todo.schedule.dto.response;
 
+import com.example.todo.comment.dto.response.CommentResponse;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -22,4 +23,13 @@ public class FindResponse {
 
     private int commentCount;
 
+
+
+    public FindResponse(Long id, String title, String content, LocalDateTime createdAt, LocalDateTime updatedAt) {
+        this.id = id;
+        this.title = title;
+        this.content = content;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
 }

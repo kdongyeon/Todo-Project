@@ -61,12 +61,39 @@ public class CommentService {
                 .orElseThrow(() -> new RuntimeException("찾을 수 없는 할일 입니다."));
 
         Comment comment = commentRepository.findById(commentId)
-                .orElseThrow(() -> new RuntimeException("찾을 수 없는 댓글입니다."));
+                .orElseThrow(() -> new RuntimeException("찾을 수 없는 댓글 입니다."));
 
 
-        List<Comment> commentList = commentRepository.findCommentId(commentId);
         List<CommentResponse> commentResponseList = new ArrayList<>();
+        List<Comment> commentList = commentRepository.findByParentCommentId(commentId);
+        for (Comment comment1 : commentList) {
+            commentResponseList.add(new CommentResponse
+                    (comment1.getId(),
+                    schedule.getId(),
+                    comment1.getContent(),
+                    comment1.getParentComment() != null ? comment1.getParentComment().getId() : null, // 부모 댓글 ID (null 처리)
+                    comment1.getCreatedAt())
+            );
+        }return commentResponseList;
 
+
+    }
+
+    public List<CommentResponse> findAll(Long scheduleId) {
+        Schedule schedule = scheduleRepository.findById(scheduleId)
+                .orElseThrow(() -> new RuntimeException("찾을 수 없는 할일 입니다."));
+
+        List<CommentResponse> commentResponseList = new ArrayList<>();
+        List<Comment> commentList = commentRepository.findAll();
+        for (Comment comment : commentList) {
+            commentResponseList.add(new CommentResponse
+                            (comment.getId(),
+                            schedule.getId(),
+                            comment.getContent(),
+                            comment.getParentComment() != null ? comment.getParentComment().getId() : null,
+                            comment.getCreatedAt()));
+        }
+        return commentResponseList;
 
     }
 }
