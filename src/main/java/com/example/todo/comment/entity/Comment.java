@@ -8,6 +8,9 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Getter
 @Entity
 @Table(name = "comment")
@@ -34,6 +37,9 @@ public class Comment extends BaseEntity {
     @JoinColumn(name = "parent_id")
     private Comment parentComment;
 
+    @OneToMany(mappedBy = "parentComment", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Comment> replies = new ArrayList<>();
+
     public Comment(String content, Long writerId, Schedule schedule, Comment parentComment) {
         this.content = content;
         this.writerId = writerId;
@@ -42,5 +48,7 @@ public class Comment extends BaseEntity {
     }
 
 
-
+    public void update(String content) {
+        this.content = content;
+    }
 }

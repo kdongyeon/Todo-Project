@@ -3,6 +3,7 @@ package com.example.todo.comment.controller;
 import com.example.todo.comment.dto.request.CreateCommentRequest;
 import com.example.todo.comment.dto.response.CommentResponse;
 import com.example.todo.comment.service.CommentService;
+import com.example.todo.schedule.dto.request.UpdateRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,7 +38,7 @@ public class CommentController {
     }
     // 대댓글 조회
     @GetMapping("/{commentId}/replies")
-    public ResponseEntity<List<CommentResponse>> findReply(
+    public ResponseEntity<CommentResponse> findReply(
             @PathVariable Long scheduleId,
             @PathVariable Long commentId
     ){
@@ -48,4 +49,16 @@ public class CommentController {
     public ResponseEntity<List<CommentResponse>> findAll(@PathVariable Long scheduleId){
         return ResponseEntity.ok(commentService.findAll(scheduleId));
     }
+    // 댓글 수정
+    @PatchMapping("/{commentId}")
+    public ResponseEntity<String> update(
+            @PathVariable Long commentId,
+            @RequestBody UpdateRequest dto
+    ){
+        commentService.update(commentId,dto);
+        return ResponseEntity.ok("댓글이 수정되었습니다.");
+    }
+    // 댓글 삭제
+    @DeleteMapping("/{commentId}")
+    public ResponseEntity
 }
