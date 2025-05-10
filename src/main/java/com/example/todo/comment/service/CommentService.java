@@ -111,4 +111,10 @@ public class CommentService {
                 .orElseThrow(() -> new RuntimeException("찾을 수 없는 댓글 입니다."));
         parentComment.update(dto.getContent());
     }
+
+    public void delete(Long commentId) {
+        Comment parentComment = commentRepository.findById(commentId)
+                .orElseThrow(() -> new RuntimeException("찾을 수 없는 댓글 입니다."));
+        commentRepository.delete(parentComment);
+    }
 }

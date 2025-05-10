@@ -60,5 +60,11 @@ public class CommentController {
     }
     // 댓글 삭제
     @DeleteMapping("/{commentId}")
-    public ResponseEntity
+    public ResponseEntity<Void> delete(
+            @PathVariable Long scheduleId,
+            @PathVariable Long commentId
+    ){
+        commentService.delete(commentId);
+        return ResponseEntity.noContent().build();
+    }
 }
