@@ -1,7 +1,9 @@
 package com.example.todo.schedule.service;
 
 import com.example.todo.comment.dto.response.CommentResponse;
+import com.example.todo.comment.entity.Comment;
 import com.example.todo.comment.repository.CommentRepository;
+import com.example.todo.comment.service.CommentService;
 import com.example.todo.schedule.dto.request.CreateRequest;
 import com.example.todo.schedule.dto.request.UpdateRequest;
 import com.example.todo.schedule.dto.response.FindResponse;
@@ -21,6 +23,8 @@ public class ScheduleService {
 
     private final ScheduleRepository scheduleRepository;
     private final CommentRepository commentRepository;
+    private final CommentService commentService;
+
 
 
     public void create(CreateRequest dto) {
@@ -31,38 +35,44 @@ public class ScheduleService {
     }
 
 
+
+    @Transactional
     public FindResponse findById(Long scheduleId) {
 
         Schedule schedule = scheduleRepository.findById(scheduleId)
                 .orElseThrow(() -> new RuntimeException("할일을 찾을 수 없습니다."));
 
+        List<Comment> parentComments = commentRepository.findByScheduleIdAndParentCommentIsNull(scheduleId);
+
+        List<CommentResponse> commentResponses = new ArrayList<>();
+
+        for (Comment comment : parentComments) {
+            commentResponses.add(commentService.commentTree(comment));
+        }
+
         return new FindResponse(schedule.getId(),
                                 schedule.getTitle(),
                                 schedule.getContent(),
                                 schedule.getCreatedAt(),
-                                schedule.getUpdatedAt()
-
+                                schedule.getUpdatedAt(),
+                                commentResponses
         );
-    }
 
+    }
 
     public List<FindResponse> findAll() {
         List<FindResponse> findResponses = new ArrayList<>();
         List<Schedule> schedules = scheduleRepository.findAll();
         for (Schedule schedule : schedules) {
             int commentCount = commentRepository.countByScheduleId(schedule.getId());
-            FindResponse findResponse = new FindResponse(schedule.getId(),
-                                                         schedule.getTitle(),
-                                                         schedule.getContent(),
-                                                         schedule.getCreatedAt(),
-                                                         schedule.getUpdatedAt(),
-                                                         commentCount
-
-            );
-            findResponses.add(findResponse);
-
-
-
+            findResponses.add(new FindResponse(
+                    schedule.getId(),
+                    schedule.getTitle(),
+                    schedule.getContent(),
+                    schedule.getCreatedAt(),
+                    schedule.getUpdatedAt(),
+                    commentCount
+            ));
 
         }
         return findResponses;

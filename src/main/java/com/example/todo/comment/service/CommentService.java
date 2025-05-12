@@ -78,10 +78,11 @@ public class CommentService {
                 comment.getParentComment() != null ? comment.getParentComment().getId() : null,
                 comment.getCreatedAt()
         );
-        List<Comment> children = commentRepository.findByParentCommentIdOrderByCreatedAtAsc(comment.getId());
+        List<Comment> replies = commentRepository.findByParentCommentId(comment.getId());
 
-        for (Comment child : children) {
-            commentResponse.getReply().add(commentTree(child));
+        for (Comment reply : replies) {
+            List<CommentResponse> replies1 = commentResponse.getReplies();
+            replies1.add(commentTree(reply));
 
         }
         return commentResponse;
@@ -94,8 +95,8 @@ public class CommentService {
         List<CommentResponse> commentResponseList = new ArrayList<>();
         List<Comment> commentList = commentRepository.findAll();
         for (Comment comment : commentList) {
-            commentResponseList.add(new CommentResponse
-                            (comment.getId(),
+            commentResponseList.add(new CommentResponse(
+                            comment.getId(),
                             schedule.getId(),
                             comment.getContent(),
                             comment.getParentComment() != null ? comment.getParentComment().getId() : null,

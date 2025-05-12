@@ -17,6 +17,6 @@ public class CommentResponse {
     private final String content;
     private final Long parentId;
     private final LocalDateTime createdAt;
-    private final List<CommentResponse> reply = new ArrayList<>();
+    private final List<CommentResponse> replies = new ArrayList<>();
 
 }

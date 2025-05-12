@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @AllArgsConstructor
@@ -23,6 +25,8 @@ public class FindResponse {
 
     private int commentCount;
 
+    private List<CommentResponse> comments = new ArrayList<>();
+
 
 
     public FindResponse(Long id, String title, String content, LocalDateTime createdAt, LocalDateTime updatedAt) {
@@ -31,5 +35,23 @@ public class FindResponse {
         this.content = content;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+    }
+
+    public FindResponse(Long id, String title, String content, LocalDateTime createdAt, LocalDateTime updatedAt, List<CommentResponse> comments) {
+        this.id = id;
+        this.title = title;
+        this.content = content;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.comments = comments;
+    }
+
+    public FindResponse(Long id, String title, String content, LocalDateTime createdAt, LocalDateTime updatedAt, int commentCount) {
+        this.id = id;
+        this.title = title;
+        this.content = content;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.commentCount = commentCount;
     }
 }
