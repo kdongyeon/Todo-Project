@@ -7,6 +7,7 @@ import com.example.todo.comment.service.CommentService;
 import com.example.todo.schedule.dto.request.CreateRequest;
 import com.example.todo.schedule.dto.request.UpdateRequest;
 import com.example.todo.schedule.dto.response.FindResponse;
+import com.example.todo.schedule.dto.response.FindResponses;
 import com.example.todo.schedule.entity.Schedule;
 import com.example.todo.schedule.repository.ScheduleRepository;
 import lombok.RequiredArgsConstructor;
@@ -60,12 +61,12 @@ public class ScheduleService {
 
     }
 
-    public List<FindResponse> findAll() {
-        List<FindResponse> findResponses = new ArrayList<>();
+    public List<FindResponses> findAll() {
+        List<FindResponses> findResponses = new ArrayList<>();
         List<Schedule> schedules = scheduleRepository.findAll();
         for (Schedule schedule : schedules) {
             int commentCount = commentRepository.countByScheduleId(schedule.getId());
-            findResponses.add(new FindResponse(
+            findResponses.add(new FindResponses(
                     schedule.getId(),
                     schedule.getTitle(),
                     schedule.getContent(),

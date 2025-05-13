@@ -1,18 +1,14 @@
 package com.example.todo.schedule.dto.response;
 
-import com.example.todo.comment.dto.response.CommentResponse;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
-
-@AllArgsConstructor
 @Getter
-public class FindResponse {
-
+@AllArgsConstructor
+public class FindResponses {
     private Long id;
 
     private String title;
@@ -23,9 +19,6 @@ public class FindResponse {
 
     private LocalDateTime updatedAt;
 
-    private List<CommentResponse> comments = new ArrayList<>();
-
-
-
+    private int commentCount;
 
 }

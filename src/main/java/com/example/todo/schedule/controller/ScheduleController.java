@@ -3,6 +3,7 @@ package com.example.todo.schedule.controller;
 import com.example.todo.schedule.dto.request.CreateRequest;
 import com.example.todo.schedule.dto.request.UpdateRequest;
 import com.example.todo.schedule.dto.response.FindResponse;
+import com.example.todo.schedule.dto.response.FindResponses;
 import com.example.todo.schedule.service.ScheduleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -34,7 +35,7 @@ public class ScheduleController {
     }
     //일정 전체 조회
     @GetMapping
-    ResponseEntity<List<FindResponse>> findAll(){
+    ResponseEntity<List<FindResponses>> findAll(){
 
         scheduleService.findAll();
         return ResponseEntity.ok(scheduleService.findAll());
