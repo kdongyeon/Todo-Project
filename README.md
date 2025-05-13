@@ -4,6 +4,7 @@
 ## API
 ![API](./images/schedule.png)
 ![API](./images/comment.png)
+![API](./images/reply.png)
 ---
 ## ERD
 ![ERD](./images/ERD.png)
