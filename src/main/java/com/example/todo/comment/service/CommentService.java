@@ -81,12 +81,13 @@ public class CommentService {
         List<Comment> replies = commentRepository.findByParentCommentId(comment.getId());
 
         for (Comment reply : replies) {
-            List<CommentResponse> replies1 = commentResponse.getReplies();
-            replies1.add(commentTree(reply));
+            List<CommentResponse> responses = commentResponse.getReplies();
+            responses.add(commentTree(reply));
 
         }
         return commentResponse;
     }
+
 
     public List<CommentResponse> findAll(Long scheduleId) {
         Schedule schedule = scheduleRepository.findById(scheduleId)

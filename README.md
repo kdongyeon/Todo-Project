@@ -9,6 +9,15 @@
 ## ERD
 ![ERD](./images/ERD.png)
 ---
+## Capture
+![capture](./images/scheduleCreate.png)
+![capture](./images/scheduleAll.png)
+![capture](./images/scheduleUpdate.png)
+![capture](./images/scheduleFind.png)
+![capture](./images/scheduleDelete.png)
+![capture](./images/parentCommentCreate.png)
+![capture](./images/commentFind.png)
+
 
 
 
